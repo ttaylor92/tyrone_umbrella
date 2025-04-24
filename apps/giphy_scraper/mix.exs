@@ -25,7 +25,10 @@ defmodule GiphyScraper.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:req, []}
+      {:req, []},
+      {:ecto_sql, []},
+      {:postgrex, []},
+      {:ecto_shorts, []}
     ]
   end
 end
