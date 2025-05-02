@@ -7,7 +7,17 @@
 # General application configuration
 import Config
 
-config :graphql_api_assignment, GraphqlApiAssignment.Repo,
+apps = [
+  :schemas_pg,
+  :graphql_api_assignment,
+  :giphy_scraper
+]
+
+for app <- apps do
+  config app, :mix_env, Mix.env()
+end
+
+config :schemas_pg, SchemasPG.Repo,
   database: "graphql_api_assignment_repo",
   username: "user",
   password: "password",
@@ -16,20 +26,11 @@ config :graphql_api_assignment, GraphqlApiAssignment.Repo,
   log: :debug,
   stacktrace: true
 
-config :giphy_scraper, GiphyScraper.Repo,
-  database: "giphy_scraper_repo",
-  username: "user",
-  password: "password",
-  hostname: "localhost",
-  show_sensitive_data_on_connection_error: true,
-  log: :debug,
-  stacktrace: true
-
-config :graphql_api_assignment,
-  ecto_repos: [GraphqlApiAssignment.Repo]
+config :schemas_pg,
+  ecto_repos: [SchemasPG.Repo]
 
 config :ecto_shorts,
-  repo: GraphqlApiAssignment.Repo,
+  repo: SchemasPG.Repo,
   error_module: EctoShorts.Actions.Error
 
 config :graphql_api_assignment,

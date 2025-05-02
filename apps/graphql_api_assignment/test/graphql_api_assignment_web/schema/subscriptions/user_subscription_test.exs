@@ -1,5 +1,5 @@
 defmodule GraphqlApiAssignmentWeb.Schema.Subscriptions.UserSubscriptionTest do
-  use GraphqlApiAssignment.Support.Datacase
+  use SchemasPG.Support.Datacase
   use GraphqlApiAssignmentWeb.Support.SubscriptionCase
 
   import GraphqlApiAssignment.Support.HelperFunctions, only: [setup_mock_accounts: 1]

@@ -1,12 +1,12 @@
 defmodule GraphqlApiAssignmentWeb.Schema do
   use Absinthe.Schema
 
-  alias GraphqlApiAssignment.SchemasPG.AccountManagement.{Preference, User}
+  alias SchemasPG.AccountManagement.{Preference, User}
   alias GraphqlApiAssignmentWeb.Schema.{Queries, Mutations, Subscriptions}
   alias GraphqlApiAssignmentWeb.Types
   alias GraphqlApiAssignment.Middlewares
 
-  import_types Types.{UserInputType, UserResponseType, BucketInputType, TokenResponseType}
+  import_types Types.{UserInputType, UserResponseType, BucketInputType, TokenResponseType, GiphyType}
   import_types Queries.{UserQuery, BucketQuery}
   import_types Mutations.UserMutation
   import_types Subscriptions.UserSubscription

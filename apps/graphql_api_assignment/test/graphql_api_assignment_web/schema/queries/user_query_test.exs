@@ -1,11 +1,11 @@
 defmodule GraphqlApiAssignmentWeb.Schema.Queries.UserQuerTest do
-  use GraphqlApiAssignment.Support.Datacase
+  use SchemasPG.Support.Datacase
 
   import GraphqlApiAssignment.Support.HelperFunctions, only: [setup_mock_accounts: 1]
 
   alias GraphqlApiAssignmentWeb.Schema
 
-  alias GraphqlApiAssignment.Support.Factory.SchemasPG.AccountManagement.{
+  alias SchemasPG.Support.Factory.AccountManagement.{
     PreferenceFactory,
     UserFactory
   }

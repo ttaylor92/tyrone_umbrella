@@ -1,6 +1,6 @@
 defmodule GraphqlApiAssignment.UserService do
   alias GraphqlApiAssignment.TokenPipeline.TokenProducer
-  alias GraphqlApiAssignment.SchemasPG.AccountManagement
+  alias SchemasPG.AccountManagement
 
   def get_user_by_id(id) do
     case AccountManagement.get_user(id, preload: :preferences) do

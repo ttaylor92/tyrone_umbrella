@@ -1,5 +1,5 @@
 defmodule GraphqlApiAssignmentWeb.Schema.Queries.BucketQueryTest do
-  use GraphqlApiAssignment.Support.Datacase
+  use SchemasPG.Support.Datacase
 
   alias GraphqlApiAssignment.HashringCounter
   alias GraphqlApiAssignmentWeb.Schema

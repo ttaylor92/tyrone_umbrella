@@ -32,12 +32,11 @@ defmodule GraphqlApiAssignment.Application do
       # Start to serve requests, typically the last entry
       GraphqlApiAssignmentWeb.Endpoint,
       {Absinthe.Subscription, GraphqlApiAssignmentWeb.Endpoint},
-      GraphqlApiAssignment.Repo,
       GraphqlApiAssignment.TokenCache,
       {PrometheusTelemetry,
        exporter: [enabled?: true, opts: [port: get_port("PROMETHEUS_PORT")]],
        metrics: [
-         PrometheusTelemetry.Metrics.Ecto.metrics_for_repo(GraphqlApiAssignment.Repo),
+         PrometheusTelemetry.Metrics.Ecto.metrics_for_repo(SchemasPG.Repo),
          PrometheusTelemetry.Metrics.GraphQL.metrics(),
          GraphqlApiAssignment.Metrics.TokenPipeline.metrics(),
          GraphqlApiAssignment.Metrics.HashringCounter.metrics()

@@ -11,7 +11,6 @@ defmodule GraphqlApiAssignment.MixProject do
       lockfile: "../../mix.lock",
       elixir: "~> 1.17",
       start_permanent: Mix.env() == :prod,
-      aliases: aliases(),
       deps: deps(),
       elixirc_paths: elixirc_paths(Mix.env())
     ]
@@ -41,14 +40,10 @@ defmodule GraphqlApiAssignment.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
+      {:phoenix_pubsub, "~> 2.0"},
       {:absinthe, "~> 1.7"},
       {:absinthe_plug, "~> 1.5"},
-      {:phoenix_pubsub, "~> 2.0"},
       {:absinthe_phoenix, "~> 2.0"},
-      {:ecto_sql, "~> 3.0"},
-      {:postgrex, ">= 0.0.0"},
-      {:ecto_shorts, "~> 2.4.0"},
-      {:factory_ex, "~> 0.1.0", only: :test},
       {:faker, "~> 0.18", only: :test},
       {:dataloader, "~> 1.0.0"},
       {:gen_stage, "~> 1.2.1"},
@@ -58,22 +53,8 @@ defmodule GraphqlApiAssignment.MixProject do
       {:castore, "~> 1.0"},
       {:poolboy, "~> 1.5.2"},
       {:request_cache_plug, "~> 1.0"},
-      {:libring, "~> 1.0"}
-    ]
-  end
-
-  # Aliases are shortcuts or tasks specific to the current project.
-  # For example, to install project dependencies and perform other setup tasks, run:
-  #
-  #     $ mix setup
-  #
-  # See the documentation for `Mix` for more info on aliases.
-  defp aliases do
-    [
-      setup: ["deps.get", "ecto.setup"],
-      "ecto.setup": ["ecto.create", "ecto.migrate"],
-      "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.drop", "ecto.create --quiet", "ecto.migrate --quiet", "test"]
+      {:libring, "~> 1.0"},
+      {:schemas_pg, in_umbrella: true}
     ]
   end
 end

@@ -24,7 +24,8 @@ defmodule GraphqlApiAssignment.TokenCacheTest do
         table_name: :test_non_existent_tokens
       )
 
-    assert TokenCache.get(999, pid) === "Token creation is processing. Token will be distributed once processing is done."
+    assert TokenCache.get(999, pid) ===
+             "Token creation is processing. Token will be distributed once processing is done."
   end
 
   test "deletes a token" do
@@ -41,6 +42,8 @@ defmodule GraphqlApiAssignment.TokenCacheTest do
     assert TokenCache.get(user_id, pid) === token
 
     assert TokenCache.delete(user_id, pid)
-    assert TokenCache.get(user_id, pid) === "Token creation is processing. Token will be distributed once processing is done."
+
+    assert TokenCache.get(user_id, pid) ===
+             "Token creation is processing. Token will be distributed once processing is done."
   end
 end

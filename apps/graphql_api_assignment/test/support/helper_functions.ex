@@ -1,5 +1,5 @@
 defmodule GraphqlApiAssignment.Support.HelperFunctions do
-  alias GraphqlApiAssignment.Support.Factory.SchemasPG.AccountManagement.{
+  alias SchemasPG.Support.Factory.AccountManagement.{
     PreferenceFactory,
     UserFactory
   }

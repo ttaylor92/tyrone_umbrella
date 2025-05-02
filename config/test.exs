@@ -7,7 +7,7 @@ config :graphql_api_assignment, GraphqlApiAssignmentWeb.Endpoint,
   secret_key_base: "TY2c40DC/zXRVv5V62goALCzGfRB0TnsgqAlfNeRlcSMI6sM+yABI5/BOiWTzKEa",
   server: false
 
-config :graphql_api_assignment, GraphqlApiAssignment.Repo,
+config :schemas_pg, SchemasPG.Repo,
   database: "graphql_api_assignment_repo_test",
   username: "user",
   password: "password",

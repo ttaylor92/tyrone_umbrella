@@ -1,9 +1,9 @@
 defmodule GraphqlApiAssignmentWeb.Schema.Mutations.UserMutationTest do
-  use GraphqlApiAssignment.Support.Datacase
+  use SchemasPG.Support.Datacase
 
   import GraphqlApiAssignment.Support.HelperFunctions, only: [setup_mock_accounts: 1]
 
-  alias GraphqlApiAssignment.Support.Factory.SchemasPG.AccountManagement.UserFactory
+  alias SchemasPG.Support.Factory.AccountManagement.UserFactory
   alias GraphqlApiAssignmentWeb.Schema
 
   @valid_secret_key "Imsecret"

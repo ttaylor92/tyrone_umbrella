@@ -1,7 +1,7 @@
 defmodule GraphqlApiAssignment.ResourceScheduler do
   @doc false
   use GenServer
-  alias GraphqlApiAssignment.SchemasPG.AccountManagement
+  alias SchemasPG.AccountManagement
   alias GraphqlApiAssignment.SecurityClearanceQueue
 
   @default_name __MODULE__

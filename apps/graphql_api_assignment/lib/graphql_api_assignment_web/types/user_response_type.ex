@@ -4,7 +4,8 @@ defmodule GraphqlApiAssignmentWeb.Types.UserResponseType do
 
   object :user_response do
     field :id, :integer
-    field :name, :string
+    field :first_name, :string
+    field :last_name, :string
     field :email, :string
     field :preferences, :preference_response
 
@@ -12,6 +13,10 @@ defmodule GraphqlApiAssignmentWeb.Types.UserResponseType do
       middleware RequestCache.Middleware, ttl: :timer.seconds(60)
 
       resolve &UserResolver.get_user_auth_token/3
+    end
+
+    field :giphy_image, :gipy_image_response do
+      # resolve
     end
   end
 
