@@ -1,4 +1,4 @@
-defmodule GraphqlApiAssignment.ErrorUtils do
+defmodule SharedUtils.ErrorUtils do
 
   @type error_response :: %{code: term(), details: map(), message: String.t()}
 

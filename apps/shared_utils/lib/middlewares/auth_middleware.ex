@@ -1,4 +1,4 @@
-defmodule GraphqlApiAssignment.Middlewares.AuthMiddleware do
+defmodule SharedUtils.Middlewares.AuthMiddleware do
   @behaviour Absinthe.Middleware
 
   alias Absinthe.Resolution

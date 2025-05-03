@@ -10,7 +10,8 @@ defmodule SchemasPG.Support.Factory.AccountManagement.UserFactory do
 
   def build(params \\ %{}) do
     default = %{
-      name: "#{Faker.Person.first_name()} #{Faker.Person.last_name()}",
+      first_name: Faker.Person.first_name(),
+      last_name: Faker.Person.last_name(),
       email: "user_email#{Faker.random_between(1, 5000)}@email.com"
     }
 

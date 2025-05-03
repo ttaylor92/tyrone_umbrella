@@ -1,9 +1,9 @@
-defmodule GraphqlApiAssignment.Middlewares.ChangesetConverterMiddleware do
+defmodule SharedUtils.Middlewares.ChangesetConverterMiddleware do
   @behaviour Absinthe.Middleware
 
   alias Absinthe.Resolution
   alias Ecto.Changeset
-  alias GraphqlApiAssignment.ErrorUtils
+  alias SharedUtils.ErrorUtils
 
   @impl Absinthe.Middleware
   def call(%Resolution{state: :resolved, errors: []} = resolution, _config), do: resolution

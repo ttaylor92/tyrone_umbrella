@@ -4,10 +4,12 @@ defmodule GraphqlApiAssignment.UserServiceTest do
   import GraphqlApiAssignment.Support.HelperFunctions, only: [setup_mock_accounts: 1]
 
   alias GraphqlApiAssignment.UserService
+
   alias SchemasPG.Support.Factory.AccountManagement.{
     PreferenceFactory,
     UserFactory
   }
+
   alias SchemasPG.AccountManagement.{
     Preference,
     User
@@ -15,33 +17,38 @@ defmodule GraphqlApiAssignment.UserServiceTest do
 
   describe "&create_user/1" do
     test "returns error when no name is given" do
-      assert {:error, response} = UserService.create_user(%{name: "", email: "tester@mail.com"})
+      assert {:error, response} = UserService.create_user(%{first_name: "", last_name: "", email: "tester@mail.com"})
       error_keyword_list = Map.get(response, :errors)
-      assert {"can't be blank", [validation: :required]} = Keyword.get(error_keyword_list, :name)
-    end
+      assert {"can't be blank", [validation: :required]} = Keyword.get(error_keyword_list, :first_name)
+      assert {"can't be blank", [validation: :required]} = Keyword.get(error_keyword_list, :last_name)
+   end
 
     test "returns error when no email is given" do
-      assert {:error, response} = UserService.create_user(%{name: "Johnny"})
+      assert {:error, response} = UserService.create_user(%{name: "Johnny", last_name: "Test"})
       error_keyword_list = Map.get(response, :errors)
       assert {"can't be blank", [validation: :required]} = Keyword.get(error_keyword_list, :email)
     end
 
     test "returns error when no email is invalid" do
       assert {:error, response} =
-               UserService.create_user(%{name: "Johnny", email: "sometext.com"})
+               UserService.create_user(%{name: "Johnny", last_name: "Test", email: "sometext.com"})
 
       error_keyword_list = Map.get(response, :errors)
-      assert {"has invalid format", [validation: :format]} = Keyword.get(error_keyword_list, :email)
+
+      assert {"has invalid format", [validation: :format]} =
+               Keyword.get(error_keyword_list, :email)
     end
 
     test "returns user when successful" do
-      attr = %{name: "John Doe", email: "tester@mail.com"}
-      name = attr.name
+      attr = %{first_name: "John", email: "tester@mail.com", last_name: "Doe"}
+      first_name = attr.first_name
+      last_name = attr.last_name
       email = attr.email
 
       assert {:ok,
               %User{
-                name: ^name,
+                first_name: ^first_name,
+                last_name: ^last_name,
                 email: ^email
               }} = UserService.create_user(attr)
     end
@@ -115,7 +122,6 @@ defmodule GraphqlApiAssignment.UserServiceTest do
       assert {:ok, response} =
                UserService.get_users(%{after: user_id, before: user_id + 20, first: 3})
 
-
       assert Enum.empty?(response) === false
       filtered_list = Enum.filter(response, fn user -> user.id < user_id + 6 end)
       assert length(filtered_list) === 3
@@ -123,6 +129,7 @@ defmodule GraphqlApiAssignment.UserServiceTest do
 
     test "returns users via preferences params" do
       user = UserFactory.insert!()
+
       PreferenceFactory.insert!(%{
         user_id: user.id,
         likes_emails: false,
@@ -130,18 +137,24 @@ defmodule GraphqlApiAssignment.UserServiceTest do
         likes_faxes: true
       })
 
-      assert {:ok, [%User{
-        preferences: %{
-          likes_emails: false,
-          likes_phone_calls: true,
-          likes_faxes: true
-         }
-      } | _]} =
-               UserService.get_users(%{preferences: %{
-                likes_emails: false,
-                likes_phone_calls: true,
-                likes_faxes: true
-               }})
+      assert {:ok,
+              [
+                %User{
+                  preferences: %{
+                    likes_emails: false,
+                    likes_phone_calls: true,
+                    likes_faxes: true
+                  }
+                }
+                | _
+              ]} =
+               UserService.get_users(%{
+                 preferences: %{
+                   likes_emails: false,
+                   likes_phone_calls: true,
+                   likes_faxes: true
+                 }
+               })
     end
   end
 
@@ -150,10 +163,15 @@ defmodule GraphqlApiAssignment.UserServiceTest do
 
     test "returns user when name change successful", context do
       user_id = context.user.id
-      new_name = "Jane Doe"
+      first_name = "Jane"
+      last_name = "Doe"
 
-      assert {:ok, %User{id: ^user_id, name: ^new_name}} =
-               UserService.update_a_user(%{id: user_id, name: new_name})
+      assert {:ok, %User{id: ^user_id, first_name: ^first_name, last_name: ^last_name}} =
+               UserService.update_a_user(%{
+                 id: user_id,
+                 first_name: first_name,
+                 last_name: last_name
+               })
     end
 
     test "returns user when email change successful", context do

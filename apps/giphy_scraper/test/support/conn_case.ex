@@ -32,7 +32,7 @@ defmodule GiphyScraperWeb.ConnCase do
   end
 
   setup tags do
-    GiphyScraper.DataCase.setup_sandbox(tags)
+    SchemasPG.Support.Datacase.setup_sandbox(tags)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 end

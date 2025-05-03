@@ -54,7 +54,8 @@ defmodule GraphqlApiAssignment.MixProject do
       {:poolboy, "~> 1.5.2"},
       {:request_cache_plug, "~> 1.0"},
       {:libring, "~> 1.0"},
-      {:schemas_pg, in_umbrella: true}
+      {:schemas_pg, in_umbrella: true},
+      {:shared_utils, in_umbrella: true}
     ]
   end
 end

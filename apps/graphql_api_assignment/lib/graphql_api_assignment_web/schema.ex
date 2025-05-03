@@ -4,7 +4,6 @@ defmodule GraphqlApiAssignmentWeb.Schema do
   alias SchemasPG.AccountManagement.{Preference, User}
   alias GraphqlApiAssignmentWeb.Schema.{Queries, Mutations, Subscriptions}
   alias GraphqlApiAssignmentWeb.Types
-  alias GraphqlApiAssignment.Middlewares
 
   import_types Types.{UserInputType, UserResponseType, BucketInputType, TokenResponseType, GiphyType}
   import_types Queries.{UserQuery, BucketQuery}
@@ -50,6 +49,6 @@ defmodule GraphqlApiAssignmentWeb.Schema do
   end
 
   defp post_resolution_middleware do
-    [Middlewares.ChangesetConverterMiddleware]
+    [SharedUtils.Middlewares.ChangesetConverterMiddleware]
   end
 end

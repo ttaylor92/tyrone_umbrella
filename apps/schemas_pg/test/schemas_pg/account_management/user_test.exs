@@ -5,11 +5,12 @@ defmodule SchemasPG.AccountManagement.UserTest do
 
   describe "changeset/2" do
     test "valid changeset with required fields" do
-      attrs = %{name: "John Doe", email: "john.doe@example.com"}
+      attrs = %{first_name: "John", last_name: "Doe", email: "john.doe@example.com"}
       changeset = User.changeset(%User{}, attrs)
 
       assert changeset.valid?
-      assert changeset.changes.name === attrs.name
+      assert changeset.changes.first_name === attrs.first_name
+      assert changeset.changes.last_name === attrs.last_name
       assert changeset.changes.email === attrs.email
     end
 
@@ -18,11 +19,12 @@ defmodule SchemasPG.AccountManagement.UserTest do
       changeset = User.changeset(%User{}, attrs)
 
       refute changeset.valid?
-      assert "can't be blank" in errors_on(changeset).name
+      assert "can't be blank" in errors_on(changeset).first_name
+      assert "can't be blank" in errors_on(changeset).last_name
     end
 
     test "changeset is invalid without email" do
-      attrs = %{name: "John Doe"}
+      attrs = %{first_name: "John", last_name: "Doe"}
       changeset = User.changeset(%User{}, attrs)
 
       refute changeset.valid?
@@ -30,7 +32,7 @@ defmodule SchemasPG.AccountManagement.UserTest do
     end
 
     test "changeset is invalid with incorrect email format" do
-      attrs = %{name: "John Doe", email: "invalid_email"}
+      attrs = %{first_name: "John", last_name: "Doe", email: "invalid_email"}
       changeset = User.changeset(%User{}, attrs)
 
       refute changeset.valid?
@@ -38,7 +40,7 @@ defmodule SchemasPG.AccountManagement.UserTest do
     end
 
     test "changeset downcases email" do
-      attrs = %{name: "John Doe", email: "JOHN.DOE@EXAMPLE.COM"}
+      attrs = %{first_name: "John", last_name: "Doe", email: "JOHN.DOE@EXAMPLE.COM"}
       changeset = User.changeset(%User{}, attrs)
 
       assert changeset.changes.email === "john.doe@example.com"

@@ -55,11 +55,9 @@ defmodule GiphyScraper.MixProject do
       {:prometheus_telemetry, "~> 0.4"},
       {:castore, "~> 1.0"},
       {:schemas_pg, in_umbrella: true},
+      {:shared_utils, in_umbrella: true},
 
-      {:req, []},
-      {:ecto_sql, []},
-      {:postgrex, []},
-      {:ecto_shorts, []}
+      {:req, ">= 0.0.0"},
     ]
   end
 end

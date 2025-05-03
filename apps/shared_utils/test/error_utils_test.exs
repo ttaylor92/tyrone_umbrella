@@ -1,6 +1,6 @@
-defmodule GraphqlApiAssignment.ErrorUtilsTest do
+defmodule SharedUtils.ErrorUtilsTest do
   use ExUnit.Case
-  alias GraphqlApiAssignment.ErrorUtils
+  alias SharedUtils.ErrorUtils
 
   test "not_found/2 returns the correct error structure" do
     expected = %{code: :not_found, message: "Resource not found", details: %{}}

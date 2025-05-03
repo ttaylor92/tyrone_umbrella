@@ -17,7 +17,8 @@ defmodule GraphqlApiAssignmentWeb.Schema.Queries.UserQuerTest do
       query($id: Int!) {
         user(id: $id) {
           id
-          name
+          firstName
+          lastName
           email
           preferences {
             likesEmails
@@ -35,7 +36,8 @@ defmodule GraphqlApiAssignmentWeb.Schema.Queries.UserQuerTest do
                Absinthe.run(@query_user, Schema, variables: variables)
 
       assert user["id"] === context.user.id
-      assert user["name"] === context.user.name
+      assert user["firstName"] === context.user.first_name
+      assert user["lastName"] === context.user.last_name
       assert user["email"] === context.user.email
       assert user["preferences"]["likesEmails"] === context.preference.likes_emails
       assert user["preferences"]["likesFaxes"] === context.preference.likes_faxes
@@ -90,7 +92,8 @@ defmodule GraphqlApiAssignmentWeb.Schema.Queries.UserQuerTest do
       query ($first: Int, $after: Int, $before: Int, $preferences: PreferenceInput) {
         users(first: $first, after: $after, before: $before, preferences: $preferences) {
           id
-          name
+          firstName
+          lastName
           email
           preferences {
             likesEmails

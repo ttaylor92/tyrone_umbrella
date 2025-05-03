@@ -1,4 +1,4 @@
-defmodule GiphyScraperWeb.Types.GiphyType do
+defmodule GraphqlApiAssignmentWeb.Types.GiphyType do
   use Absinthe.Schema.Notation
 
   object :gipy_image_response do

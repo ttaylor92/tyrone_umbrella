@@ -25,7 +25,8 @@ defmodule SchemasPG.AccountManagement.User do
     |> validate_required(@required_fields)
     |> validate_format(:email, ~r/@/)
     |> update_change(:email, &String.downcase(&1))
-    |> validate_length(:name, min: 3)
+    |> validate_length(:first_name, min: 3)
+    |> validate_length(:last_name, min: 3)
     |> unique_constraint(:email)
     |> cast_assoc(:preferences)
   end

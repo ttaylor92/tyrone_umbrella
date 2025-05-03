@@ -8,7 +8,8 @@ defmodule GraphqlApiAssignmentWeb.Schema.Subscriptions.UserSubscriptionTest do
   subscription createdUser {
     createdUser {
       id
-      name
+      firstName
+      lastName
       email
       preferences {
         likesEmails
@@ -41,10 +42,11 @@ defmodule GraphqlApiAssignmentWeb.Schema.Subscriptions.UserSubscriptionTest do
     setup [:setup_mock_accounts, :setup_socket]
 
     @create_user_query """
-    mutation($name: String!, $email: String!, $preferences: PreferenceInput!) {
-      createUser(name: $name, email: $email, preferences: $preferences) {
+    mutation($firstName: String!, $lastName: String!, $email: String!, $preferences: PreferenceInput!) {
+      createUser(firstName: $firstName, lastName: $lastName, email: $email, preferences: $preferences) {
         id
-        name
+        firstName
+        lastName
         email
         preferences {
           likesEmails
@@ -63,7 +65,8 @@ defmodule GraphqlApiAssignmentWeb.Schema.Subscriptions.UserSubscriptionTest do
       ref =
         push_doc(socket, @create_user_query,
           variables: %{
-            "name" => "John Doe",
+            "firstName" => "John",
+            "lastName" => "Doe",
             "email" => "john@example.com",
             "preferences" => %{
               "likesEmails" => true,
