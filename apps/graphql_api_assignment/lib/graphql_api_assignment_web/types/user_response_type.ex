@@ -15,8 +15,8 @@ defmodule GraphqlApiAssignmentWeb.Types.UserResponseType do
       resolve &UserResolver.get_user_auth_token/3
     end
 
-    field :giphy_image, :gipy_image_response do
-      # resolve
+    field :giphy_image, list_of(:gipy_image_response) do
+      resolve &UserResolver.get_giphy_image_queries/3
     end
   end
 

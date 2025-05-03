@@ -1,6 +1,11 @@
 defmodule GraphqlApiAssignmentWeb.Resolvers.UserResolver do
   alias GraphqlApiAssignment.UserService
   alias GraphqlApiAssignment.HashringCounter
+  alias SchemasPG.AccountManagement.User
+
+  def get_giphy_image_queries(_, _, %User{id: id}) do
+    {:ok, SchemasPG.Giphy.find_user_images(id)}
+  end
 
   def get_user_by_id(_, %{id: id}, _) do
     HashringCounter.increment_key(:get_user)
