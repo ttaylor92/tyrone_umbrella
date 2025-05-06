@@ -1,7 +1,7 @@
 defmodule GraphqlApiAssignmentWeb.Resolvers.UserResolver do
-  alias GraphqlApiAssignment.UserService
-  alias GraphqlApiAssignment.HashringCounter
+  alias GraphqlApiAssignment.{UserService, HashringCounter, GiphyJobCreator}
   alias SchemasPG.AccountManagement.User
+  alias GraphqlApiAssignment.TokenPipeline.TokenProducer
 
   def get_giphy_image_queries(_, _, %User{id: id}) do
     {:ok, SchemasPG.Giphy.find_user_images(id)}
@@ -14,7 +14,12 @@ defmodule GraphqlApiAssignmentWeb.Resolvers.UserResolver do
 
   def create_user(_, args, _) do
     HashringCounter.increment_key(:create_user)
-    UserService.create_user(args)
+
+    with {:ok, user_schema_data} <- UserService.create_user(args),
+         :ok <- submit_new_user_id_for_token_generation(user_schema_data),
+         :ok <- GiphyJobCreator.process_user(user_schema_data) do
+      {:ok, user_schema_data}
+    end
   end
 
   def get_users_by_preferences(_, args, _) do
@@ -54,5 +59,9 @@ defmodule GraphqlApiAssignmentWeb.Resolvers.UserResolver do
 
   def get_user_auth_token(%{id: id}, _, _) do
     {:ok, GraphqlApiAssignment.TokenCache.get(id)}
+  end
+
+  defp submit_new_user_id_for_token_generation(user) do
+    TokenProducer.new_user_registered(user.id)
   end
 end

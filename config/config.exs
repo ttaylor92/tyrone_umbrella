@@ -10,7 +10,8 @@ import Config
 apps = [
   :schemas_pg,
   :graphql_api_assignment,
-  :giphy_scraper
+  :giphy_scraper,
+  :task_service
 ]
 
 for app <- apps do
@@ -75,6 +76,24 @@ config :graphql_api_assignment, GraphqlApiAssignmentWeb.Endpoint,
 # at the `config/runtime.exs`.
 config :graphql_api_assignment, GraphqlApiAssignment.Mailer, adapter: Swoosh.Adapters.Local
 
+if Mix.env() === :test do
+  config :task_service, Oban,
+    testing: :inline,
+    repo: SchemasPG.Repo
+else
+  config :task_service, Oban,
+    notifier: Oban.Notifiers.Postgres,
+    engine: Oban.Engines.Basic,
+    repo: SchemasPG.Repo,
+    plugins: [
+      Oban.Plugins.Lifeline,
+      Oban.Plugins.Reindexer,
+      {Oban.Plugins.Pruner, max_age: :timer.hours(24)}
+    ],
+    queues: [default: 10]
+end
+
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
@@ -82,6 +101,10 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+if File.exists?(Path.expand("config.secret.exs", __DIR__)) do
+  import_config "config.secret.exs"
+end
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

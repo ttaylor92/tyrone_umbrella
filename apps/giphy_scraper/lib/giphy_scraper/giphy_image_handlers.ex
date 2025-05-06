@@ -1,9 +1,6 @@
 defmodule GiphyScraper.GiphyImageHandlers do
   alias GiphyScraper.GiphyImage
 
-  @api_key "e7jkU5tw2FuNtiQwVGYplbReiUs0Ufw4"
-  @chunk_amount 10
-
   @doc """
   Search Function to fetch query from the giphy api.
 
@@ -27,14 +24,8 @@ defmodule GiphyScraper.GiphyImageHandlers do
   """
   def search(query) do
     with {:ok, response} <-
-           Req.get("https://api.giphy.com/v1/gifs/search?q=#{query}&api_key=#{@api_key}") do
+           Req.get("https://api.giphy.com/v1/gifs/search?q=#{query}&api_key=#{GiphyScraper.Config.api_key()}") do
       serialized_data = serialize_giphy_data(response)
-
-      serialized_data
-      |> Enum.chunk_every(@chunk_amount)
-      |> Enum.each(fn chunk ->
-        GiphyScraper.ImageProcessor.process_chunk(chunk)
-      end)
 
       {:ok, serialized_data}
     end

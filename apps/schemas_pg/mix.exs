@@ -36,7 +36,9 @@ defmodule SchemasPG.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:dataloader, "~> 1.0.0"},
       {:ecto_shorts, "~> 2.4.0"},
-      {:factory_ex, "~> 0.1.0", only: :test}
+      {:factory_ex, "~> 0.1.0", only: :test},
+      {:oban, "~> 2.19"},
+      {:jason, "~> 1.4"}
     ]
   end
 

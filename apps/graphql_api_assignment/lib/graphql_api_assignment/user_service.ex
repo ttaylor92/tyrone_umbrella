@@ -1,5 +1,4 @@
 defmodule GraphqlApiAssignment.UserService do
-  alias GraphqlApiAssignment.TokenPipeline.TokenProducer
   alias SchemasPG.AccountManagement
 
   def get_user_by_id(id) do
@@ -10,18 +9,7 @@ defmodule GraphqlApiAssignment.UserService do
   end
 
   def create_user(args) do
-    args
-    |> AccountManagement.create_user()
-    |> submit_new_user_id_for_token_generation()
-  end
-
-  def submit_new_user_id_for_token_generation({:error, changeset}) do
-    {:error, changeset}
-  end
-
-  def submit_new_user_id_for_token_generation({:ok, user}) do
-    TokenProducer.new_user_registered(user.id)
-    {:ok, user}
+    AccountManagement.create_user(args)
   end
 
   def get_users(args) do

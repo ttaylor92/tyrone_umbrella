@@ -46,4 +46,14 @@ defmodule SchemasPG.AccountManagement.User do
   def get_user_ids(offset) do
     from(u in __MODULE__, select: u.id, offset: ^offset)
   end
+
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(user, opts) do
+      %{
+        user_id: user.id,
+        first_name: user.first_name
+      }
+      |> Jason.Encoder.Map.encode(opts)
+    end
+  end
 end

@@ -1,4 +1,4 @@
-defmodule GiphyScraper.ImageProcessor do
+defmodule GraphqlApiAssignment.GiphyJobCreator do
   use GenServer
   require Logger
 
@@ -15,20 +15,18 @@ defmodule GiphyScraper.ImageProcessor do
   end
 
   @impl true
-  def handle_cast({:process_chunk, chunk}, state) do
-    task = Task.Supervisor.async_nolink(GiphyScraper.TaskSupervisor, fn ->
-      Enum.each(chunk, fn giphy_image ->
-        SchemasPG.Giphy.create_image(giphy_image)
-      end)
+  def handle_cast({:process_user, user_schema_data}, state) do
+    task = Task.Supervisor.async_nolink(GraphqlApiAssignment.TaskSupervisor, fn ->
+      TaskService.UserPostSetup.handle_user_creation(user_schema_data)
     end)
 
     {:noreply, %{state | ref: task.ref}}
   end
 
   @impl true
-  def handle_info({ref, result}, state) do
+  def handle_info({ref, _result}, state) do
     Process.demonitor(ref, [:flush])
-    Logger.info("#{length(result)}, was processed.")
+    Logger.info("User was processed.")
     {:noreply, %{state | ref: nil}}
   end
 
@@ -39,7 +37,7 @@ defmodule GiphyScraper.ImageProcessor do
   end
 
   # API
-  def process_chunk(chunk, name \\ @default_name) do
-    GenServer.cast(name, {:process_chunk, chunk})
+  def process_user(user, name \\ @default_name) do
+    GenServer.cast(name, {:process_user, user})
   end
 end
