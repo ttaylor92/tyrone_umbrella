@@ -1,7 +1,7 @@
 defmodule SchemasPG.Giphy.GiphyImage do
   use SchemasPG
 
-  schema "giphy_image" do
+  schema "giphy_images" do
     field :username, :string
     field :url, :string
     field :title, :string

@@ -28,6 +28,7 @@ defmodule TaskService.MixProject do
     [
       {:oban, "~> 2.19"},
       {:igniter, "~> 0.5", only: [:dev]},
+      {:req, ">= 0.0.0"},
       {:schemas_pg, in_umbrella: true},
       {:giphy_scraper, in_umbrella: true}
     ]

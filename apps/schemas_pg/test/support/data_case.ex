@@ -1,6 +1,12 @@
 defmodule SchemasPG.Support.Datacase do
   use ExUnit.CaseTemplate
 
+  using do
+    quote do
+      use Oban.Testing, repo: SchemasPG.Repo
+    end
+  end
+
   setup tags do
     setup_sandbox(tags)
     :ok

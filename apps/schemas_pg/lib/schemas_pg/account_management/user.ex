@@ -9,7 +9,7 @@ defmodule SchemasPG.AccountManagement.User do
     has_one :preferences, SchemasPG.AccountManagement.Preference,
       on_replace: :delete
 
-    has_one :users, SchemasPG.Giphy.GiphyImage,
+    has_many :giphy_images, SchemasPG.Giphy.GiphyImage,
       on_replace: :delete
 
     timestamps(type: :utc_datetime)

@@ -18,6 +18,11 @@ config :schemas_pg, SchemasPG.Repo,
   stacktrace: true,
   pool_size: 10
 
+config :giphy_scraper,
+  req_options: [
+    plug: {Req.Test, GiphyScraper.GiphyImageHandlers}
+  ]
+
 # In test we don't send emails
 config :graphql_api_assignment, GraphqlApiAssignment.Mailer, adapter: Swoosh.Adapters.Test
 
