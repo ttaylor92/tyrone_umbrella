@@ -42,7 +42,7 @@ defmodule GraphqlApiAssignmentWeb do
         layouts: [html: GraphqlApiAssignmentWeb.Layouts]
 
       import Plug.Conn
-      import GraphqlApiAssignmentWeb.Gettext
+      # import GraphqlApiAssignmentWeb.Gettext
 
       unquote(verified_routes())
     end

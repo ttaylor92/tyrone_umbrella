@@ -1,4 +1,6 @@
 defmodule TaskService.NodeStatus do
+  require Logger
+
   use Oban.Worker,
     unique: [
       period: 60,
@@ -9,7 +11,7 @@ defmodule TaskService.NodeStatus do
   @impl Oban.Worker
   def perform(_) do
     Enum.each(Node.list(), fn node ->
-      IO.inspect("Node: #{node}, is available")
+      Logger.info("Node: #{node}, is available")
     end)
 
     :ok

@@ -1,4 +1,5 @@
 defmodule GraphqlApiAssignment.TokenPipeline.TokenConsumer do
+  require Logger
   use GenStage
   alias GraphqlApiAssignment.TokenPipeline
 
@@ -16,7 +17,7 @@ defmodule GraphqlApiAssignment.TokenPipeline.TokenConsumer do
   end
 
   def handle_events(user_tokens, _from, state) do
-    IO.inspect("Consumer received #{length(user_tokens)} events")
+    Logger.info("Consumer received #{length(user_tokens)} events")
 
     for {user_id, token} <- user_tokens do
       # Update Cache

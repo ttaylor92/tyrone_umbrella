@@ -14,9 +14,7 @@ defmodule GiphyScraperWeb.Schema do
 
 
   def context(context) do
-    loader =
-      Dataloader.new()
-      |> Dataloader.add_source(GiphyImage, GiphyImage.data())
+    loader = Dataloader.add_source(Dataloader.new(), GiphyImage, GiphyImage.data())
 
     Map.put(context, :loader, loader)
   end

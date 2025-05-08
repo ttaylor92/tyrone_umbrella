@@ -6,11 +6,9 @@ defmodule SchemasPG.AccountManagement.User do
     field :last_name, :string
     field :email, :string
 
-    has_one :preferences, SchemasPG.AccountManagement.Preference,
-      on_replace: :delete
+    has_one :preferences, SchemasPG.AccountManagement.Preference, on_replace: :delete
 
-    has_many :giphy_images, SchemasPG.Giphy.GiphyImage,
-      on_replace: :delete
+    has_many :giphy_images, SchemasPG.Giphy.GiphyImage, on_replace: :delete
 
     timestamps(type: :utc_datetime)
   end
@@ -49,11 +47,13 @@ defmodule SchemasPG.AccountManagement.User do
 
   defimpl Jason.Encoder, for: __MODULE__ do
     def encode(user, opts) do
-      %{
-        user_id: user.id,
-        first_name: user.first_name
-      }
-      |> Jason.Encoder.Map.encode(opts)
+      Jason.Encoder.Map.encode(
+        %{
+          user_id: user.id,
+          first_name: user.first_name
+        },
+        opts
+      )
     end
   end
 end
